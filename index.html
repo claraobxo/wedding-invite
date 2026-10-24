@@ -74,7 +74,13 @@ stage.addEventListener('click',openInvite);stage.addEventListener('keydown',e=>{
 openBtn.addEventListener('click',openInvite);resetBtn.addEventListener('click',closeInvite);
 creatorBtn.addEventListener('click',()=>{creator.style.display=creator.style.display==='block'?'none':'block'});
 function b64url(s){return btoa(unescape(encodeURIComponent(s))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
-function decode(s){try{return JSON.parse(decodeURIComponent(escape(atob(s.replace(/-/g,'+').replace(/_/g,'/'))))}catch(e){return null}}
+function decode(s){
+  try {
+    const normalized = s.replace(/-/g,'+').replace(/_/g,'/');
+    const padded = normalized + '='.repeat((4-normalized.length%4)%4);
+    return JSON.parse(decodeURIComponent(escape(atob(padded))));
+  } catch(e) { return null; }
+}
 const params=location.hash.slice(1);if(params){const data=decode(params);if(data){if(data.welcome){intro.textContent=data.welcome}if(data.buttonText){openBtn.textContent=data.buttonText}}}
 document.getElementById('generate').addEventListener('click',()=>{
 const data={welcome:document.getElementById('welcome').value.trim(),buttonText:document.getElementById('buttonText').value.trim()||'Open invitation'};
