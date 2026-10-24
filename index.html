@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clara & John — Wedding Invitation</title>
+<style>
+:root{--rose:#d5ada6;--wine:#4c1732;--sage:#a9ad79;--cream:#f7f4ed}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--wine);font-family:Georgia,'Times New Roman',serif}
+button,input{font:inherit}.shell{min-height:100vh;display:grid;place-items:center;padding:28px}
+.panel{width:min(100%,760px);text-align:center}.eyebrow{letter-spacing:.18em;text-transform:uppercase;font:11px Arial,sans-serif;margin-bottom:12px}
+h1{font-weight:normal;font-size:clamp(28px,5vw,46px);margin:0 0 10px}.intro{font-size:16px;line-height:1.6;margin:0 auto 24px;max-width:500px}
+.envelope-stage{position:relative;width:min(100%,540px);margin:0 auto 24px;aspect-ratio:1.25;perspective:1200px;cursor:pointer}
+.envelope{position:absolute;inset:0;background:var(--sage);overflow:hidden;box-shadow:0 18px 40px #4c173222;transition:transform .8s}
+.liner{position:absolute;left:7%;right:7%;top:-4%;height:73%;background:var(--wine);clip-path:polygon(50% 0,100% 100%,0 100%);display:flex;align-items:center;justify-content:center}
+.liner img{width:100%;height:100%;object-fit:cover;opacity:.9;mix-blend-mode:screen}
+.front{position:absolute;inset:34% 0 0;background:var(--sage);clip-path:polygon(0 0,50% 55%,100% 0,100% 100%,0 100%);border-top:1px solid #878c57}
+.flap{position:absolute;inset:0 0 auto;height:53%;background:#b7bb88;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .8s;z-index:3}
+.seal{position:absolute;z-index:4;left:50%;top:51%;transform:translate(-50%,-50%);width:74px;height:74px;border-radius:50%;background:#f4e8db;color:var(--wine);display:grid;place-items:center;font-size:28px;box-shadow:0 3px 8px #0002}
+.hint{font:12px Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase}
+.opening .flap{transform:rotateX(180deg)}.opening .seal{opacity:0;transition:opacity .2s}.opening .envelope{transform:translateY(10px) scale(.96);opacity:0;transition:all .85s .45s}
+.invite{display:none;max-width:620px;margin:0 auto;animation:appear .8s ease both}.invite img{display:block;width:100%;height:auto;box-shadow:0 18px 42px #4c173222}
+.actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:20px}
+.btn{border:1px solid var(--wine);background:transparent;color:var(--wine);padding:12px 18px;cursor:pointer;border-radius:2px}.btn.primary{background:var(--wine);color:#fff}
+.creator{display:none;background:#fffdf9;border:1px solid #e4d6d0;padding:22px;margin:24px auto 0;text-align:left;max-width:540px}
+.creator h2{font-weight:normal;margin:0 0 14px}.creator label{display:block;font:12px Arial,sans-serif;margin:12px 0 5px}.creator input{width:100%;padding:10px;border:1px solid #d8c6bf;background:white;color:var(--wine)}
+.output{display:none;margin-top:14px;word-break:break-all;font:13px Arial,sans-serif;background:#f5eee9;padding:12px}
+@keyframes appear{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@media(max-width:520px){.shell{padding:18px}.envelope-stage{aspect-ratio:1.05}.seal{width:58px;height:58px}.creator{padding:16px}}
+</style>
+</head>
+<body>
+<main class="shell">
+<section class="panel" id="panel">
+<div class="eyebrow">A wedding invitation</div>
+<h1>Clara &amp; John</h1>
+<p class="intro" id="intro">You are warmly invited to celebrate our wedding on Saturday 29th May 2027.</p>
+<div class="envelope-stage" id="stage" role="button" tabindex="0" aria-label="Open the wedding invitation">
+<div class="envelope">
+<div class="liner"><img src="assets/envelope-reference.png" alt=""></div>
+<div class="front"></div><div class="flap"></div>
+<div class="seal">C&amp;J</div>
+</div>
+</div>
+<div class="hint" id="hint">Tap the envelope to open</div>
+<div class="invite" id="invite"><img src="assets/invitation.png" alt="Clara and John's wedding invitation"></div>
+<div class="actions">
+<button class="btn primary" id="openBtn">Open invitation</button>
+<button class="btn" id="creatorBtn">Create / share link</button>
+<button class="btn" id="resetBtn" style="display:none">Close invitation</button>
+</div>
+<section class="creator" id="creator">
+<h2>Make your invitation link</h2>
+<p style="font-size:14px;line-height:1.5;margin-top:0">This creates a shareable link to this invitation. All guests can use the same link; no guest list or RSVP collection is included.</p>
+<label for="welcome">Welcome message (optional)</label>
+<input id="welcome" maxlength="180" value="You are warmly invited to celebrate our wedding on Saturday 29th May 2027.">
+<label for="buttonText">Envelope button text</label>
+<input id="buttonText" maxlength="50" value="Open invitation">
+<div class="actions" style="justify-content:flex-start">
+<button class="btn primary" id="generate">Generate invitation link</button>
+</div>
+<div class="output" id="output"><div id="linkText"></div><div class="actions" style="justify-content:flex-start"><button class="btn" id="copy">Copy link</button><a class="btn" id="preview" target="_blank" rel="noopener">Preview link</a></div></div>
+</section>
+</section>
+</main>
+<script>
+const stage=document.getElementById('stage'), invite=document.getElementById('invite'), hint=document.getElementById('hint');
+const openBtn=document.getElementById('openBtn'), resetBtn=document.getElementById('resetBtn'), creator=document.getElementById('creator');
+const creatorBtn=document.getElementById('creatorBtn'), intro=document.getElementById('intro');
+let opened=false;
+function openInvite(){if(opened)return;opened=true;stage.classList.add('opening');openBtn.style.display='none';hint.textContent='';setTimeout(()=>{stage.style.display='none';invite.style.display='block';resetBtn.style.display='inline-block'},1100)}
+function closeInvite(){opened=false;stage.style.display='block';stage.classList.remove('opening');invite.style.display='none';openBtn.style.display='inline-block';resetBtn.style.display='none';hint.textContent='Tap the envelope to open'}
+stage.addEventListener('click',openInvite);stage.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openInvite()}});
+openBtn.addEventListener('click',openInvite);resetBtn.addEventListener('click',closeInvite);
+creatorBtn.addEventListener('click',()=>{creator.style.display=creator.style.display==='block'?'none':'block'});
+function b64url(s){return btoa(unescape(encodeURIComponent(s))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
+function decode(s){try{return JSON.parse(decodeURIComponent(escape(atob(s.replace(/-/g,'+').replace(/_/g,'/'))))}catch(e){return null}}
+const params=location.hash.slice(1);if(params){const data=decode(params);if(data){if(data.welcome){intro.textContent=data.welcome}if(data.buttonText){openBtn.textContent=data.buttonText}}}
+document.getElementById('generate').addEventListener('click',()=>{
+const data={welcome:document.getElementById('welcome').value.trim(),buttonText:document.getElementById('buttonText').value.trim()||'Open invitation'};
+const url=location.href.split('#')[0]+'#'+b64url(JSON.stringify(data));
+document.getElementById('linkText').textContent=url;document.getElementById('preview').href=url;document.getElementById('output').style.display='block';
+document.getElementById('copy').onclick=async()=>{try{await navigator.clipboard.writeText(url);document.getElementById('copy').textContent='Copied!'}catch(e){prompt('Copy your invitation link:',url)}};
+});
+</script>
+</body>
+</html>
