@@ -1,93 +1,125 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Clara & John — Wedding Invitation</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Invite Studio</title>
 <style>
-:root{--rose:#d5ada6;--wine:#4c1732;--sage:#a9ad79;--cream:#f7f4ed}
-*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--wine);font-family:Georgia,'Times New Roman',serif}
-button,input{font:inherit}.shell{min-height:100vh;display:grid;place-items:center;padding:28px}
-.panel{width:min(100%,760px);text-align:center}.eyebrow{letter-spacing:.18em;text-transform:uppercase;font:11px Arial,sans-serif;margin-bottom:12px}
-h1{font-weight:normal;font-size:clamp(28px,5vw,46px);margin:0 0 10px}.intro{font-size:16px;line-height:1.6;margin:0 auto 24px;max-width:500px}
-.envelope-stage{position:relative;width:min(100%,540px);margin:0 auto 24px;aspect-ratio:1.25;perspective:1200px;cursor:pointer}
-.envelope{position:absolute;inset:0;background:var(--sage);overflow:hidden;box-shadow:0 18px 40px #4c173222;transition:transform .8s}
-.liner{position:absolute;left:7%;right:7%;top:-4%;height:73%;background:var(--wine);clip-path:polygon(50% 0,100% 100%,0 100%);display:flex;align-items:center;justify-content:center}
-.liner img{width:100%;height:100%;object-fit:cover;opacity:.9;mix-blend-mode:screen}
-.front{position:absolute;inset:34% 0 0;background:var(--sage);clip-path:polygon(0 0,50% 55%,100% 0,100% 100%,0 100%);border-top:1px solid #878c57}
-.flap{position:absolute;inset:0 0 auto;height:53%;background:#b7bb88;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .8s;z-index:3}
-.seal{position:absolute;z-index:4;left:50%;top:51%;transform:translate(-50%,-50%);width:74px;height:74px;border-radius:50%;background:#f4e8db;color:var(--wine);display:grid;place-items:center;font-size:28px;box-shadow:0 3px 8px #0002}
-.hint{font:12px Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase}
-.opening .flap{transform:rotateX(180deg)}.opening .seal{opacity:0;transition:opacity .2s}.opening .envelope{transform:translateY(10px) scale(.96);opacity:0;transition:all .85s .45s}
-.invite{display:none;max-width:620px;margin:0 auto;animation:appear .8s ease both}.invite img{display:block;width:100%;height:auto;box-shadow:0 18px 42px #4c173222}
-.actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:20px}
-.btn{border:1px solid var(--wine);background:transparent;color:var(--wine);padding:12px 18px;cursor:pointer;border-radius:2px}.btn.primary{background:var(--wine);color:#fff}
-.creator{display:none;background:#fffdf9;border:1px solid #e4d6d0;padding:22px;margin:24px auto 0;text-align:left;max-width:540px}
-.creator h2{font-weight:normal;margin:0 0 14px}.creator label{display:block;font:12px Arial,sans-serif;margin:12px 0 5px}.creator input{width:100%;padding:10px;border:1px solid #d8c6bf;background:white;color:var(--wine)}
-.output{display:none;margin-top:14px;word-break:break-all;font:13px Arial,sans-serif;background:#f5eee9;padding:12px}
-@keyframes appear{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
-@media(max-width:520px){.shell{padding:18px}.envelope-stage{aspect-ratio:1.05}.seal{width:58px;height:58px}.creator{padding:16px}}
+:root{--ink:#4b2436;--paper:#fbf8f2;--sage:#b7bd91;--rose:#d9b3ae}
+*{box-sizing:border-box}body{margin:0;background:#f4f1eb;color:var(--ink);font:15px Arial,sans-serif}
+header{padding:20px 28px;border-bottom:1px solid #ddd4ca;background:#fbf8f2;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{font:26px Georgia,serif}.muted{color:#766b70;font-size:13px}
+main{max-width:1180px;margin:28px auto;padding:0 18px;display:grid;grid-template-columns:minmax(300px,430px) minmax(300px,1fr);gap:24px}
+.card{background:#fffdf9;border:1px solid #e3d9cf;border-radius:14px;padding:22px;box-shadow:0 6px 24px #4525360b}
+h2{font:24px Georgia,serif;margin:0 0 18px}h3{font:18px Georgia,serif;margin:22px 0 10px}
+label{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.08em;margin:13px 0 6px}
+input,select,textarea{width:100%;padding:11px;border:1px solid #d7c9c0;border-radius:7px;background:#fff;color:#3f2433;font:14px Arial,sans-serif}
+button,.button{border:1px solid #4b2436;background:#4b2436;color:white;padding:11px 15px;border-radius:7px;cursor:pointer;font:14px Arial,sans-serif}
+button.secondary{background:white;color:#4b2436}button:disabled{opacity:.5;cursor:default}
+.row{display:flex;gap:9px;align-items:center}.row>*{flex:1}.pattern-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.pattern{height:65px;border:2px solid transparent;border-radius:8px;cursor:pointer;position:relative;overflow:hidden}.pattern.selected{border-color:#4b2436;outline:2px solid #fff;box-shadow:0 0 0 2px #4b2436}
+.pattern span{position:absolute;bottom:4px;left:4px;font-size:10px;background:#fffdf0cc;padding:3px 5px;border-radius:3px}
+.preview-wrap{display:flex;align-items:center;justify-content:center;min-height:530px;background:#e9e3da;border-radius:10px;padding:25px}
+.env-stage{width:min(100%,500px);aspect-ratio:1.35;position:relative;perspective:1000px;cursor:pointer}
+.env{position:absolute;inset:0;overflow:hidden;background:var(--sage);box-shadow:0 18px 45px #321a2926}
+.liner{position:absolute;inset:0 5% 8%;background:var(--pattern);clip-path:polygon(0 0,100% 0,50% 78%);opacity:.95}
+.env-front{position:absolute;inset:35% 0 0;background:var(--envcolor);clip-path:polygon(0 0,50% 55%,100% 0,100% 100%,0 100%)}
+.env-flap{position:absolute;top:0;left:0;width:100%;height:53%;background:var(--flapcolor);clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .8s;z-index:3}
+.monogram{position:absolute;left:50%;top:53%;transform:translate(-50%,-50%);z-index:4;background:#f7eee2;color:#4b2436;width:72px;height:72px;border-radius:50%;display:grid;place-items:center;font:25px Georgia,serif;border:1px solid #b99d8d}
+.preview-open .env-flap{transform:rotateX(180deg)}.preview-open .env{opacity:0;transition:opacity .7s .5s}
+.invite-preview{display:none;max-width:540px;width:100%;text-align:center}.invite-preview img{width:100%;height:auto;max-height:430px;object-fit:contain;box-shadow:0 16px 35px #321a2920}.placeholder{padding:50px 20px;border:1px dashed #bcaea3;background:#f8f3eb;color:#7a6871}
+.msg{font-size:13px;line-height:1.5;margin-top:12px;white-space:pre-wrap}.links{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.links a{color:#4b2436}
+#dashboard{display:none}#builder{display:none}.tiny{font-size:12px;color:#766b70;line-height:1.5}
+@media(max-width:850px){main{grid-template-columns:1fr}.preview-wrap{min-height:380px}}
 </style>
 </head>
 <body>
-<main class="shell">
-<section class="panel" id="panel">
-<div class="eyebrow">A wedding invitation</div>
-<h1>Clara &amp; John</h1>
-<p class="intro" id="intro">You are warmly invited to celebrate our wedding on Saturday 29th May 2027.</p>
-<div class="envelope-stage" id="stage" role="button" tabindex="0" aria-label="Open the wedding invitation">
-<div class="envelope">
-<div class="liner"><img src="assets/envelope-reference.png" alt=""></div>
-<div class="front"></div><div class="flap"></div>
-<div class="seal">C&amp;J</div>
-</div>
-</div>
-<div class="hint" id="hint">Tap the envelope to open</div>
-<div class="invite" id="invite"><img src="assets/invitation.png" alt="Clara and John's wedding invitation"></div>
-<div class="actions">
-<button class="btn primary" id="openBtn">Open invitation</button>
-<button class="btn" id="creatorBtn">Create / share link</button>
-<button class="btn" id="resetBtn" style="display:none">Close invitation</button>
-</div>
-<section class="creator" id="creator">
-<h2>Make your invitation link</h2>
-<p style="font-size:14px;line-height:1.5;margin-top:0">This creates a shareable link to this invitation. All guests can use the same link; no guest list or RSVP collection is included.</p>
-<label for="welcome">Welcome message (optional)</label>
-<input id="welcome" maxlength="180" value="You are warmly invited to celebrate our wedding on Saturday 29th May 2027.">
-<label for="buttonText">Envelope button text</label>
-<input id="buttonText" maxlength="50" value="Open invitation">
-<div class="actions" style="justify-content:flex-start">
-<button class="btn primary" id="generate">Generate invitation link</button>
-</div>
-<div class="output" id="output"><div id="linkText"></div><div class="actions" style="justify-content:flex-start"><button class="btn" id="copy">Copy link</button><a class="btn" id="preview" target="_blank" rel="noopener">Preview link</a></div></div>
+<header><div><div class="brand">Invite Studio</div><div class="muted">Create your own digital invitation</div></div><div class="row" style="max-width:390px"><input id="email" placeholder="Email for your account"><input id="password" type="password" placeholder="Password"><button id="signIn">Sign in</button></div></header>
+<main>
+<section class="card" id="authCard">
+<h2>Welcome to your invitation studio</h2>
+<p>Connect your own Supabase project to save invitations and create shareable links. Sign up or sign in above after completing the setup guide.</p>
+<p class="tiny">Your Supabase project is your private storage. This starter uses Supabase email/password authentication.</p>
+<div class="msg" id="authMsg"></div>
 </section>
+<section class="card" id="builder">
+<h2>Build your invitation</h2>
+<label>Invitation title</label><input id="title" placeholder="Clara & John — Wedding Invitation">
+<label>Upload invitation PDF</label><input id="pdf" type="file" accept="application/pdf">
+<div class="tiny">PDF uploads are stored in your Supabase project. For preview, the browser opens the PDF in a new tab; the guest page displays a PDF viewer.</div>
+<label>Envelope colour</label><div class="pattern-grid" id="colors"></div>
+<label>Envelope pattern / liner</label><div class="pattern-grid" id="patterns"></div>
+<label>Upload your own liner image (optional)</label><input id="linerUpload" type="file" accept="image/*">
+<label>Monogram / seal text</label><input id="monogram" maxlength="8" value="C & J">
+<label>Joy wedding website URL</label><input id="joy" type="url" placeholder="https://withjoy.com/your-wedding">
+<label>Link label</label><input id="joyLabel" value="View Wedding Details">
+<div class="row" style="margin-top:18px"><button id="save">Save invitation</button><button class="secondary" id="new">New design</button></div>
+<div class="msg" id="saveMsg"></div><div id="shareBox" class="msg"></div>
+<div class="row" style="margin-top:10px"><button class="secondary" id="publish">Publish / update guest link</button></div>
+</section>
+<section class="card" id="previewCard">
+<h2>Live preview</h2><div class="preview-wrap">
+<div class="env-stage" id="envStage" tabindex="0" role="button" aria-label="Click to preview opening">
+<div class="env" id="env"><div class="liner" id="liner"></div><div class="env-front"></div><div class="env-flap"></div><div class="monogram" id="mono">C &amp; J</div></div></div>
+<div class="invite-preview" id="invitePreview"><div id="pdfPreview" class="placeholder">Upload a PDF to preview your invitation.</div><div id="joyPreview"></div></div>
+</div><p class="tiny">Click the envelope preview to see the opening transition.</p>
+<div id="dashboard" class="msg"></div>
 </section>
 </main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const stage=document.getElementById('stage'), invite=document.getElementById('invite'), hint=document.getElementById('hint');
-const openBtn=document.getElementById('openBtn'), resetBtn=document.getElementById('resetBtn'), creator=document.getElementById('creator');
-const creatorBtn=document.getElementById('creatorBtn'), intro=document.getElementById('intro');
-let opened=false;
-function openInvite(){if(opened)return;opened=true;stage.classList.add('opening');openBtn.style.display='none';hint.textContent='';setTimeout(()=>{stage.style.display='none';invite.style.display='block';resetBtn.style.display='inline-block'},1100)}
-function closeInvite(){opened=false;stage.style.display='block';stage.classList.remove('opening');invite.style.display='none';openBtn.style.display='inline-block';resetBtn.style.display='none';hint.textContent='Tap the envelope to open'}
-stage.addEventListener('click',openInvite);stage.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openInvite()}});
-openBtn.addEventListener('click',openInvite);resetBtn.addEventListener('click',closeInvite);
-creatorBtn.addEventListener('click',()=>{creator.style.display=creator.style.display==='block'?'none':'block'});
-function b64url(s){return btoa(unescape(encodeURIComponent(s))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
-function decode(s){
-  try {
-    const normalized = s.replace(/-/g,'+').replace(/_/g,'/');
-    const padded = normalized + '='.repeat((4-normalized.length%4)%4);
-    return JSON.parse(decodeURIComponent(escape(atob(padded))));
-  } catch(e) { return null; }
-}
-const params=location.hash.slice(1);if(params){const data=decode(params);if(data){if(data.welcome){intro.textContent=data.welcome}if(data.buttonText){openBtn.textContent=data.buttonText}}}
-document.getElementById('generate').addEventListener('click',()=>{
-const data={welcome:document.getElementById('welcome').value.trim(),buttonText:document.getElementById('buttonText').value.trim()||'Open invitation'};
-const url=location.href.split('#')[0]+'#'+b64url(JSON.stringify(data));
-document.getElementById('linkText').textContent=url;document.getElementById('preview').href=url;document.getElementById('output').style.display='block';
-document.getElementById('copy').onclick=async()=>{try{await navigator.clipboard.writeText(url);document.getElementById('copy').textContent='Copied!'}catch(e){prompt('Copy your invitation link:',url)}};
-});
+const CONFIG={url:"PASTE_SUPABASE_PROJECT_URL",key:"PASTE_SUPABASE_ANON_KEY"};
+const ready=CONFIG.url.startsWith("https://")&&!CONFIG.key.startsWith("PASTE_");
+const supabase=ready?window.supabase.createClient(CONFIG.url,CONFIG.key):null;
+const $=id=>document.getElementById(id);
+let user=null,selectedColor="#b7bd91",selectedPattern="plain",linerData=null,pdfFile=null,currentId=null;
+const colorOptions=[["Sage","#b7bd91"],["Blush","#d9b3ae"],["Burgundy","#6b263f"],["Ivory","#f0e6d5"],["Dusty blue","#9fb4c3"],["Forest","#64765d"],["Champagne","#d6c29a"],["Plum","#8b6c83"]];
+const patternOptions=[["Plain","plain"],["Floral","floral"],["Botanical","botanical"],["Dots","dots"],["Stripes","stripes"],["Linen","linen"],["Gold","gold"],["Vintage","vintage"]];
+function patternCss(key){return ({plain:"linear-gradient(#d8c5aa,#d8c5aa)",floral:"radial-gradient(circle at 25% 30%,#d6a7ad 0 8%,transparent 9%),radial-gradient(circle at 70% 55%,#9fa77d 0 10%,transparent 11%),radial-gradient(circle at 48% 78%,#d6a7ad 0 8%,transparent 9%),#f2e8dc",botanical:"repeating-linear-gradient(45deg,#9ca77d 0 2px,transparent 2px 12px),#f3eadb",dots:"radial-gradient(#6b263f 1.5px,transparent 2px),#f3e8da",stripes:"repeating-linear-gradient(45deg,#b8bd91 0 8px,#f4e9da 8px 16px",linen:"repeating-linear-gradient(0deg,#ddd2c4 0 1px,#e8ded2 1px 3px),repeating-linear-gradient(90deg,#ddd2c4 0 1px,#e8ded2 1px 3px)",gold:"radial-gradient(circle,#c9a65f 1px,transparent 2px),#f2e5d0",vintage:"radial-gradient(ellipse at center,#e2c4ba 0 20%,transparent 21%),#f2e7d6"})[key]||"linear-gradient(#d8c5aa,#d8c5aa)"}
+function renderOptions(){ $("colors").innerHTML="";colorOptions.forEach(([name,color])=>{let b=document.createElement("div");b.className="pattern"+(color===selectedColor?" selected":"");b.style.background=color;b.title=name;b.innerHTML="<span>"+name+"</span>";b.onclick=()=>{selectedColor=color;renderOptions();updatePreview()};$("colors").append(b)});
+$("patterns").innerHTML="";patternOptions.forEach(([name,key])=>{let b=document.createElement("div");b.className="pattern"+(key===selectedPattern?" selected":"");b.style.background=patternCss(key);b.title=name;b.innerHTML="<span>"+name+"</span>";b.onclick=()=>{selectedPattern=key;linerData=null;renderOptions();updatePreview()};$("patterns").append(b)})}
+function updatePreview(){ $("env").style.setProperty("--envcolor",selectedColor);$("env").style.setProperty("--flapcolor",selectedColor);$("liner").style.background=linerData?`center/cover no-repeat url(${linerData})`:patternCss(selectedPattern);$("mono").textContent=$("monogram").value||"♡";$("joyPreview").innerHTML=$("joy").value?`<p><a href="${escapeAttr($("joy").value)}" target="_blank" rel="noopener">${escapeHtml($("joyLabel").value||"View Wedding Details")}</a></p>`:""}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function escapeAttr(s){return escapeHtml(s)}
+$("envStage").onclick=()=>{$("envStage").classList.add("preview-open");setTimeout(()=>{$("envStage").classList.remove("preview-open")},1400)}
+$("envStage").onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();$("envStage").click()}}
+$("linerUpload").onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{linerData=r.result;updatePreview()};r.readAsDataURL(f)}
+$("pdf").onchange=e=>{pdfFile=e.target.files[0]||null;if(pdfFile){let url=URL.createObjectURL(pdfFile);$("pdfPreview").innerHTML=`<iframe title="Invitation PDF" src="${url}" style="width:100%;height:460px;border:0"></iframe>`;$("invitePreview").style.display="block";$("envStage").style.display="none"}else{$("pdfPreview").textContent="Upload a PDF to preview your invitation."} }
+["title","monogram","joy","joyLabel"].forEach(id=>$(id).addEventListener("input",updatePreview));
+function showUser(u){user=u;$("authCard").style.display=u?"none":"block";$("builder").style.display=u?"block":"none";if(u)loadMine()}
+async function auth(){if(!ready){$("authMsg").textContent="First add your Supabase project URL and anon key in index.html (see SETUP.md).";return}
+const email=$("email").value.trim(),password=$("password").value;if(!email||!password){$("authMsg").textContent="Enter your email and password.";return}
+let res=await supabase.auth.signInWithPassword({email,password});
+if(res.error){res=await supabase.auth.signUp({email,password});}
+$("authMsg").textContent=res.error?res.error.message:"Account action complete. If sign-up email confirmation is enabled, confirm your email then sign in.";
+if(res.data?.user)showUser(res.data.user)}
+$("signIn").onclick=auth;
+async function loadMine(){if(!user||!ready)return;let {data,error}=await supabase.from("invitations").select("id,title,created_at,public_slug").eq("owner_id",user.id).order("created_at",{ascending:false});if(error){$("saveMsg").textContent=error.message;return}
+$("dashboard").innerHTML="<h3>Your saved invitations</h3>"+(data.length?data.map(x=>`<div style="padding:8px 0;border-bottom:1px solid #eee"><button class="secondary" data-id="${x.id}">${escapeHtml(x.title||"Untitled invitation")}</button> <span class="tiny">${x.public_slug?`<a href="invite.html?id=${encodeURIComponent(x.public_slug)}" target="_blank">Open public link</a>`:"Draft"}</span></div>`).join(""):"<p class='tiny'>No saved invitations yet.</p>");$("dashboard").style.display="block";
+$("dashboard").querySelectorAll("button[data-id]").forEach(b=>b.onclick=()=>loadDesign(b.dataset.id))}
+async function loadDesign(id){let {data,error}=await supabase.from("invitations").select("*").eq("id",id).single();if(error){$("saveMsg").textContent=error.message;return}currentId=id;$("title").value=data.title||"";$("monogram").value=data.monogram||"";$("joy").value=data.joy_url||"";$("joyLabel").value=data.joy_label||"View Wedding Details";selectedColor=data.envelope_color||colorOptions[0][1];selectedPattern=data.pattern||"plain";linerData=null;renderOptions();updatePreview();if(data.pdf_path){let {data:obj}=supabase.storage.from("invite-files").getPublicUrl(data.pdf_path);$("pdfPreview").innerHTML=`<iframe title="Invitation PDF" src="${obj.publicUrl}" style="width:100%;height:460px;border:0"></iframe>`;$("invitePreview").style.display="block";$("envStage").style.display="none"}}
+$("new").onclick=()=>{currentId=null;$("title").value="";$("monogram").value="C & J";$("joy").value="";$("joyLabel").value="View Wedding Details";pdfFile=null;$("pdf").value="";$("pdfPreview").textContent="Upload a PDF to preview your invitation.";$("invitePreview").style.display="none";$("envStage").style.display="block";selectedColor=colorOptions[0][1];selectedPattern="plain";linerData=null;renderOptions();updatePreview();$("shareBox").textContent=""}
+$("publish").onclick=async()=>{
+if(!ready){$("shareBox").textContent="Configure Supabase first (SETUP.md).";return}
+if(!user||!currentId){$("shareBox").textContent="Sign in and save this invitation first.";return}
+$("publish").disabled=true;$("shareBox").textContent="Publishing…";
+try{
+let slug;let {data:existing}=await supabase.from("invitations").select("public_slug").eq("id",currentId).single();
+slug=existing?.public_slug||crypto.randomUUID();
+let {error}=await supabase.from("invitations").update({public_slug:slug,is_published:true}).eq("id",currentId);
+if(error)throw error;
+const guestUrl=new URL("invite.html",location.href);guestUrl.searchParams.set("id",slug);
+$("shareBox").innerHTML=`<strong>Your guest invitation link</strong><br><a href="${guestUrl.href}" target="_blank" rel="noopener">${guestUrl.href}</a><br><button class="secondary" id="copyGuest" style="margin-top:8px">Copy link</button>`;
+$("copyGuest").onclick=async()=>{try{await navigator.clipboard.writeText(guestUrl.href);$("copyGuest").textContent="Copied!"}catch(e){prompt("Copy invitation link",guestUrl.href)}};
+await loadMine();
+}catch(e){$("shareBox").textContent=e.message||String(e)}finally{$("publish").disabled=false}
+};
+$("save").onclick=async()=>{if(!ready){$("saveMsg").textContent="Supabase isn't configured yet. Follow SETUP.md.";return}if(!user){$("saveMsg").textContent="Sign in first.";return}
+$("save").disabled=true;$("saveMsg").textContent="Saving…";try{
+let pdfPath=null;if(pdfFile){pdfPath=`${user.id}/${crypto.randomUUID()}.pdf`;let {error}=await supabase.storage.from("invite-files").upload(pdfPath,pdfFile,{contentType:"application/pdf",upsert:true});if(error)throw error}
+let payload={owner_id:user.id,title:$("title").value||"Untitled invitation",monogram:$("monogram").value,envelope_color:selectedColor,pattern:selectedPattern,joy_url:$("joy").value||null,joy_label:$("joyLabel").value||"View Wedding Details",pdf_path:pdfPath};
+let result;if(currentId){if(pdfPath===null){let old=await supabase.from("invitations").select("pdf_path").eq("id",currentId).single();payload.pdf_path=old.data?.pdf_path||null}result=await supabase.from("invitations").update(payload).eq("id",currentId).select().single()}else{result=await supabase.from("invitations").insert(payload).select().single()}
+if(result.error)throw result.error;currentId=result.data.id;$("saveMsg").textContent="Saved. Your design is in Your saved invitations below.";await loadMine();$("shareBox").textContent="To publish a guest link, use the Publish invitation button in the next step (setup instructions)."
+}catch(e){$("saveMsg").textContent=e.message||String(e)}finally{$("save").disabled=false}}
+if(ready){supabase.auth.getSession().then(({data})=>showUser(data.session?.user||null));supabase.auth.onAuthStateChange((event,session)=>showUser(session?.user||null))}else showUser(null);
+renderOptions();updatePreview();
 </script>
-</body>
-</html>
+</body></html>
